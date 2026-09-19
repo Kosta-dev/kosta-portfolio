@@ -182,7 +182,7 @@ export function App(){
         </button>
 
         <nav className="nav-links" id="primary-navigation" aria-label="Navegação principal">
-          <a href="#hero" onClick={() => setIsMenuOpen(false)}>
+          <a href="#about" onClick={() => setIsMenuOpen(false)}>
             Sobre mim
           </a>
           <a href="#skills" onClick={() => setIsMenuOpen(false)}>
