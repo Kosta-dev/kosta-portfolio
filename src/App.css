@@ -22,6 +22,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -80,6 +82,7 @@ a {
 .page-shell {
   min-height: 100vh;
   overflow: hidden;
+  overflow: clip; /* corta sem criar contêiner de rolagem (evita deslocamento horizontal no mobile) */
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 13%, transparent 87%, rgba(255, 255, 255, 0.08)),
     #070707;
@@ -99,6 +102,7 @@ a {
   padding: 22px 58px;
   color: #fbfaf6;
   background: rgba(5, 5, 5, 0.3);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   transform: translateX(-50%);
 }
@@ -171,6 +175,7 @@ a {
 .hero-section {
   position: relative;
   display: grid;
+  height: 82vh;
   height: 82svh;
   min-height: 620px;
   place-items: center;
@@ -320,6 +325,7 @@ a {
 
 .skills-heading {
   align-self: start;
+  min-width: 0; /* impede que o carrossel de tecnologias estique a coluna do grid */
   padding-top: 22px;
 }
 
@@ -329,6 +335,7 @@ a {
 }
 
 .skill-list {
+  min-width: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -507,160 +514,6 @@ a {
   padding: 0 26px;
 }
 
-@media (max-width: 1040px) {
-  .site-header {
-    padding: 20px 30px;
-  }
-
-  .nav-links {
-    gap: 24px;
-  }
-
-  .hero-content h1 {
-    font-size: 3.25rem;
-  }
-
-  .skills-section {
-    grid-template-columns: 1fr;
-    gap: 42px;
-  }
-
-  .skills-heading {
-    max-width: 720px;
-    padding-top: 0;
-    text-align: center;
-  }
-}
-
-@media (max-width: 760px) {
-  .site-header {
-    top: 12px;
-    width: calc(100% - 24px);
-    grid-template-columns: 1fr auto;
-    gap: 16px;
-    padding: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    background: rgba(8, 8, 8, 0.86);
-  }
-
-  .brand {
-    font-size: 1.45rem;
-  }
-
-  .menu-button {
-    display: inline-flex;
-  }
-
-  .nav-links {
-    display: none;
-    grid-column: 1 / -1;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .nav-links a {
-    width: 100%;
-    padding: 12px 0;
-  }
-
-  .site-header.is-open .nav-links {
-    display: flex;
-  }
-
-  .site-header > .email-button {
-    display: none;
-    grid-column: 1 / -1;
-    width: 100%;
-  }
-
-  .site-header.is-open > .email-button {
-    display: inline-flex;
-  }
-
-  .hero-section {
-    height: 78svh;
-    min-height: 540px;
-  }
-
-  .hero-media {
-    background-position: center bottom;
-  }
-
-  .hero-content {
-    margin-top: 80px;
-  }
-
-  .hero-content h1 {
-    font-size: 2.3rem;
-    line-height: 1.24;
-  }
-
-  .hero-content p {
-    max-width: 360px;
-    font-size: 1rem;
-  }
-
-  .about-section,
-  .skills-section,
-  .experience-section,
-  .contact-section {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
-
-  .about-section h2,
-  .contact-section h2 {
-    font-size: 1.55rem;
-  }
-
-  .qualifications-grid,
-  .skill-details,
-  .technology-list,
-  .experience-card {
-    grid-template-columns: 1fr;
-  }
-
-  .skill-details {
-    gap: 22px;
-  }
-
-  .technology-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .experience-heading {
-    margin-left: 0;
-    text-align: left;
-  }
-
-  .contact-section {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 460px) {
-  .hero-content h1 {
-    font-size: 1.9rem;
-  }
-
-  .skill-toggle span:first-child {
-    font-size: 1rem;
-  }
-
-  .technology-list {
-    grid-template-columns: 1fr;
-  }
-
-  .technology-tile {
-    min-height: 132px;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .reveal-ready .reveal,
   .reveal-ready .reveal.is-visible {
@@ -768,6 +621,7 @@ a {
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 980px;
 }
 
 .experience-carousel .experience-card {
@@ -821,8 +675,11 @@ a {
 
 /* Wrapper em volta do <article>: recorta a animação de entrada/saída. */
 .experience-viewport {
-  overflow: hidden;
+  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
+  overflow: hidden;
+  touch-action: pan-y; /* permite o gesto horizontal (swipe) sem bloquear a rolagem vertical */
 }
 
 /* Entrada (roda sempre que o article remonta por causa do key) */
@@ -921,4 +778,331 @@ a {
 .technology-tile::before,
 .technology-tile::after {
   background-image: none;
+}
+
+
+/* =====================================================================
+   RESPONSIVIDADE
+   Fica no fim do arquivo de propósito: precisa vir depois de todas as
+   regras-base (inclusive as do carrossel) para não ser sobrescrita.
+   Breakpoints: 1040px (tablet) · 960px (menu compacto) · 760px (celular)
+   ===================================================================== */
+
+/* ---------- Tablet e abaixo (até 1040px) ---------- */
+@media (max-width: 1040px) {
+  .site-header {
+    padding: 20px 30px;
+  }
+
+  .nav-links {
+    gap: 24px;
+  }
+
+  .hero-content h1 {
+    font-size: 3.25rem;
+  }
+
+  /* minmax(0, 1fr) evita que o conteúdo interno estique a coluna além da tela */
+  .skills-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 42px;
+  }
+
+  .skills-heading {
+    padding-top: 0;
+  }
+
+  /* As setas ficavam em left/right: -60px, fora da tela. Agora vão para baixo do card. */
+  .experience-carousel {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .experience-viewport {
+    flex: 0 0 100%;
+  }
+
+  .experience-content a {
+    align-self: flex-start;
+    min-height: 44px;
+  }
+
+  .experience-arrow {
+    position: static;
+    order: 1; /* o card tem order 0: as duas setas (esquerda e direita) ficam sempre abaixo dele */
+    width: 44px;
+    height: 44px;
+    transform: none;
+  }
+}
+
+/* ---------- Menu compacto (até 960px) ---------- */
+/* Entre 761px e ~900px a navegação completa quebrava em duas linhas. */
+@media (max-width: 960px) {
+  .site-header {
+    top: 12px;
+    width: calc(100% - 24px);
+    grid-template-columns: 1fr auto;
+    gap: 0 16px;
+    padding: 14px;
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto; /* menu aberto nunca passa da altura da tela (ex.: celular deitado) */
+    overscroll-behavior: contain;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(8, 8, 8, 0.86);
+  }
+
+  .brand {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    font-size: 1.45rem;
+  }
+
+  .menu-button {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+  }
+
+  .nav-links {
+    display: none;
+    grid-column: 1 / -1;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    margin-top: 10px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+  }
+
+  .nav-links a {
+    display: block;
+    width: 100%;
+    padding: 15px 0; /* alvo de toque com ~48px de altura */
+  }
+
+  .site-header.is-open .nav-links {
+    display: flex;
+  }
+
+  .site-header > .email-button {
+    display: none;
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 8px;
+  }
+
+  .site-header.is-open > .email-button {
+    display: inline-flex;
+  }
+}
+
+/* ---------- Celular (até 760px) ---------- */
+@media (max-width: 760px) {
+  [id] {
+    scroll-margin-top: 96px;
+  }
+
+  /* Hero */
+  .hero-section {
+    height: 78vh;
+    height: 78svh;
+    min-height: 540px;
+  }
+
+  .hero-media {
+    background-position: center bottom;
+  }
+
+  .hero-content {
+    margin-top: 80px;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(1.9rem, 9vw, 2.6rem);
+    line-height: 1.2;
+  }
+
+  .hero-content h1 span {
+    margin-top: 8px;
+    font-size: clamp(0.85rem, 4.2vw, 1.15rem);
+    letter-spacing: 0.04em;
+  }
+
+  .hero-content p {
+    max-width: 360px;
+    margin-top: 22px;
+    font-size: 1rem;
+  }
+
+  .scroll-cue {
+    bottom: 28px;
+  }
+
+  /* Espaçamentos e alinhamento das seções (tudo alinhado à esquerda) */
+  .about-section,
+  .skills-section,
+  .experience-section,
+  .contact-section {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .about-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+    text-align: left;
+  }
+
+  .skills-section {
+    gap: 32px;
+    padding-top: 72px;
+    padding-bottom: 64px;
+  }
+
+  .experience-section {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .contact-section {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 28px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .about-section h2,
+  .contact-section h2 {
+    max-width: none;
+    margin: 0;
+    font-size: 1.55rem;
+  }
+
+  .skills-heading h2,
+  .experience-heading h2 {
+    font-size: 1.4rem;
+  }
+
+  /* Sobre mim */
+  .qualifications-grid {
+    grid-template-columns: 1fr;
+    margin-top: 36px;
+  }
+
+  .qualification-card {
+    min-height: 0;
+    padding: 22px;
+  }
+
+  .qualification-card strong {
+    font-size: 1.6rem;
+  }
+
+  .qualification-card span {
+    margin-top: 12px;
+  }
+
+  /* Competências */
+  .tech-carousel {
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  .skill-toggle {
+    min-height: 64px;
+  }
+
+  .skill-toggle span:first-child {
+    font-size: 1.05rem;
+  }
+
+  .skill-details {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding-bottom: 24px;
+  }
+
+  .technology-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .technology-tile {
+    min-height: 72px;
+  }
+
+  .technology-tile figcaption {
+    padding: 0 10px;
+    overflow-wrap: anywhere;
+  }
+
+  /* Experiência */
+  .experience-heading {
+    align-self: stretch;
+    margin: 0;
+    text-align: left;
+  }
+
+  .experience-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin-top: 28px;
+    padding: 20px 0;
+  }
+
+  .experience-carousel .experience-card {
+    min-height: 0;
+  }
+
+  /* Os assets são quadrados: mantém 1:1 (sem cortar o logo) e limita o tamanho */
+  .experience-carousel .experience-image {
+    width: min(100%, 320px);
+    height: auto;
+    min-height: 0;
+    margin-inline: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .experience-content h3 {
+    margin: 10px 0 12px;
+    font-size: 1.15rem;
+  }
+
+  .experience-content a {
+    margin-top: 8px;
+  }
+
+  /* Contato */
+  .email-button-large {
+    width: 100%;
+    padding: 0 18px;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ---------- Celulares pequenos (até 380px) ---------- */
+@media (max-width: 380px) {
+  .brand {
+    font-size: 1.3rem;
+  }
+
+  .qualification-card strong {
+    font-size: 1.45rem;
+  }
+
+  .about-section h2,
+  .contact-section h2 {
+    font-size: 1.4rem;
+  }
 }

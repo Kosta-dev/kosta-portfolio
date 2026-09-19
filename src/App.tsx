@@ -74,7 +74,7 @@ type Qualification = {
 const qualifications: Qualification[] = [
   { category: 'Escolaridade', details: 'Ensino Médio Técnico em informatica — conclusão 12/2023' },
   { category: 'Inglês', details: 'Avançado (CNA) — Conclusão 06/2024' },
-  { category: 'Graduação', details: 'Ciências da Computação — Conclusão 12/2027' },
+  { category: 'Graduação', details: 'Ciência da Computação — Conclusão 12/2027' },
 ]
 
 type SlideDirection = 'next' | 'prev'
@@ -214,7 +214,7 @@ export function App(){
           </h1>
           <p>
             Desenvolvimento de sites rápidos, responsivos e consistentes
-            foco em React, TypeScript e boas práticas de desenvolvimento.
+            foco em React, TypeScript e experiência do usuário.
           </p>
         </div>
 
@@ -226,7 +226,7 @@ export function App(){
       <section className="about-section" id="about" aria-labelledby="about-title">
         <div className="section-label reveal">Sobre mim</div>
         <h2 className="reveal" id="about-title">
-          Estudante de Ciências da Computação | Técnico e informatica
+          Estudante de Ciência da Computação | Técnico de Informática
         </h2>
 
         <div className="qualifications-grid" aria-label="Formação e qualificações">
@@ -252,7 +252,7 @@ export function App(){
           <div className="section-label">Especialidades</div>
 
           <h2 id="skills-title">
-            Competências técnicas e tecnologias utilizadas.
+            Competências técnicas e tecnologias utilizadas
           </h2>
 
 
@@ -309,7 +309,7 @@ export function App(){
       <section className="experience-section" id="experience" aria-labelledby="experience-title">
         <div className="experience-heading reveal">
           <div className="section-label">Experiência</div>
-          <h2 id="experience-title">Projetos e serviços de relevantes.</h2>
+          <h2 id="experience-title">Projetos e serviços de relevantes</h2>
         </div>
 
         <div className="experience-carousel reveal">
@@ -337,7 +337,7 @@ export function App(){
                 style={{ '--experience-image': `url(${currentExperience.imageSrc})` } as CSSProperties}
               />
               <div className="experience-content">
-                <span>Projeto que participei</span>
+                <span>Projeto que desenvolvi</span>
                 <h3>{currentExperience.title}</h3>
                 <p>{currentExperience.description}</p>
                 <a href={currentExperience.url} target="_blank" rel="noreferrer">
@@ -365,7 +365,7 @@ export function App(){
       <section className="contact-section" id="contact" aria-labelledby="contact-title">
         <div className="reveal">
           <div className="section-label">Contato</div>
-          <h2 id="contact-title">Sempre em busca e soluções logicas.</h2>
+          <h2 id="contact-title">Sempre em busca de soluções logicas.</h2>
         </div>
         <a className="email-button email-button-large reveal" href="mailto:ph.costa0305@gmail.com">
           ph.costa0305@gmail.com
